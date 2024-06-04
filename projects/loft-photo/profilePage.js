@@ -1,13 +1,12 @@
 import model from './model';
 import mainPage from './mainPage';
 import pages from './pages';
-import { doc } from 'prettier';
 
 export default {
   async setUser(user) {
-    const photoComp = document.querySelector('component-user-info-photo');
-    const nameComp = document.querySelector('component-user-info-name');
-    const photosComp = document.querySelector('component-user-photos');
+    const photoComp = document.querySelector('.component-user-info-photo');
+    const nameComp = document.querySelector('.component-user-info-name');
+    const photosComp = document.querySelector('.component-user-photos');
     const photos = await model.getPhotos(user.id);
 
     this.user = user;
@@ -20,7 +19,7 @@ export default {
       const size = model.findSize(photo);
       const element = document.createElement('div');
 
-      element.classList.add('.component-user-photo');
+      element.classList.add('component-user-photo');
       element.dataset.id = photo.id;
       element.style.backgroundImage = `url(${size.url})`;
       photosComp.append(element);
@@ -31,7 +30,7 @@ export default {
     document
       .querySelector('.component-user-photos')
       .addEventListener('click', async (e) => {
-        if (e.target.classList.contains('component-user-photo')) {
+        if (e.target.classList.contains('.component-user-photo')) {
           const photoId = e.target.dataset.id;
           const friendsPhotos = await model.getPhotos(this.user.id);
           const photo = friendsPhotos.items.find((photo) => photo.id == photoId);
@@ -42,11 +41,11 @@ export default {
         }
       });
 
-    document.querySelector('page-profile-back').addEventListener('click', async () => {
+    document.querySelector('.page-profile-back').addEventListener('click', async () => {
       pages.openPage('main');
     });
 
-    document.querySelector('page-profile-exit').addEventListener('click', async () => {
+    document.querySelector('.page-profile-exit').addEventListener('click', async () => {
       await model.logout();
       pages.openPage('login');
     });
