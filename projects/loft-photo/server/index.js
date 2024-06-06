@@ -29,7 +29,7 @@ const methods = {
   photoStats(req, res, url, vkUser) {
     const photoId = url.searchParams.get('photo');
     const photoLikes = DB.likes.get(photoId);
-    const photoComments = DB.likes.get(photoId);
+    const photoComments = DB.comments.get(photoId);
 
     return {
       likes: photoLikes?.size ?? 0,
@@ -39,7 +39,7 @@ const methods = {
   },
   postComment(req, res, url, vkUser, body) {
     const photoId = url.searchParams.get('photo');
-    let photoComments = DB.likes.get(photoId);
+    let photoComments = DB.comments.get(photoId);
 
     if (!photoComments) {
       photoComments = [];

@@ -2,7 +2,6 @@ import model from './model';
 import pages from './pages';
 import profilePage from './profilePage';
 import commentsTemplate from './commentsTemplate.html.hbs';
-import { doc } from 'prettier';
 
 export default {
   async getNextPhoto() {
@@ -20,7 +19,7 @@ export default {
     this.friend = friend;
     this.photoId = id;
 
-    headerPhotoComp.computedStyleMap.backgroundImage = `url('${friend.photo_50}')`;
+    headerPhotoComp.style.backgroundImage = `url('${friend.photo_50}')`;
     headerNameComp.innerText = `${friend.first_name ?? ''} ${friend.last_name ?? ''}`;
     photoComp.style.backgroundImage = `url(${url})`;
     footerPhotoComp.style.backgroundImage = `url('${model.me.photo_50}')`;
@@ -83,7 +82,7 @@ export default {
     document
       .querySelector('.component-comments-container-form-send')
       .addEventListener('click', async () => {
-        if (input.ariaValueMax.trim().length) {
+        if (input.value.trim().length) {
           await model.postComment(this.photoId, input.value.trim());
           input.value = '';
           await this.loadComments(this.photoId);
@@ -96,7 +95,7 @@ export default {
     const commentsElements = commentsTemplate({
       list: comments.map((comment) => {
         return {
-          name: `${(comment.user, first_name ?? '')} ${comment.user.last_name ?? ''}`,
+          name: `${comment.user.first_name ?? ''} ${comment.user.last_name ?? ''}`,
           photo: comment.user.photo_50,
           text: comment.text,
         };
